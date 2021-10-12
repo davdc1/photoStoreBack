@@ -1,29 +1,3 @@
-// const mongoose = require('mongoose');
-// const Schema =  mongoose.Schema;
-
-// const commentSchema = new Schema(
-//     {
-//         commentId:Number,
-//         postId:Number,
-//         userId:Number,
-//         title:String,
-//         content:String,
-//         date:String,
-//         id:String
-//     }
-// );
-
-// commentSchema.set('toJSON', {
-//     virtuals: true,
-//     versionKey: false,
-//     transform: function(doc, ret){
-//         ret.id = ret._id
-//         //delete ret._id
-//     }
-
-// })
-
-// module.exports = mongoose.model('comments', commentSchema);
 
 const mongoose = require('mongoose');
 const Schema =  mongoose.Schema;

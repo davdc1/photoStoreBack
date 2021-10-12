@@ -10,6 +10,20 @@ exports.getOrders = async function(req, res, next){
     }
 }
 
+exports.getOrdersByUserId = async function(req, res, next){
+    console.log("getOrdersByUserId");
+    try{
+        let orders = await orderModel.find({userId: req.params.userId})
+        // .populate('userId')
+        // .populate({path: 'cart', populate: {path: '{}', populate:{path:'_id'}}});
+        .populate('cart._id');
+        console.log("get orders");
+        res.status(200).send(orders)
+    } catch(err){
+        res.status(500).send(err)
+    }
+}
+
 exports.getOrder = async function(req, res, next){
     try{
         console.log("get order by id");
@@ -26,6 +40,7 @@ exports.postOrder = async function(req, res, next){
         const orderItem = new orderModel(req.body);
         orderItem.save().then(() => res.send(orderItem))
     } catch(err){
+        console.log("error:", err);
         res.status(500).send(err);
     }
 }

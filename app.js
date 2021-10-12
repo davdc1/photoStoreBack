@@ -10,6 +10,8 @@ const userRouter = require('./routes/users');
 const productRouter = require('./routes/products');
 const postRouter = require('./routes/posts');
 const commentRouter = require('./routes/comments');
+const orderRouter = require('./routes/orders');
+const ticketRouter = require('./routes/tickets');
 
 
 // var indexRouter = require('./routes/index');
@@ -39,6 +41,8 @@ app.use('/users', userRouter);
 app.use('/products', productRouter);
 app.use('/posts', postRouter);
 app.use('/comments', commentRouter);
+app.use('/orders', orderRouter);
+app.use('/tickets', ticketRouter);
 
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
