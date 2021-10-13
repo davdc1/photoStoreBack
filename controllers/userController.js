@@ -101,3 +101,12 @@ exports.updateCart = async function(req, res, next){
     }
 }
 
+exports.getUserByEmail = async function(req, res, next){
+    try{
+        console.log("get user by email");
+        let user = await userModel.findOne({email: req.body.email})
+        res.status(200).send(user)
+    } catch(err){
+        res.status(500).send(err);
+    }
+}

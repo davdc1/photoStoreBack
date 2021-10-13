@@ -8,6 +8,7 @@ const userCont = require('../controllers/userController');
 router.get('/', userCont.getUsers);
 router.get('/:id', userCont.getUser);
 router.post('/', userCont.postUser);
+router.post('/getid', userCont.getUserByEmail);
 router.put('/:id', userCont.putUser);
 router.put('/addtocart/:_id', userCont.addToCart)
 router.put('/updatecart/:_id', userCont.updateCart);
