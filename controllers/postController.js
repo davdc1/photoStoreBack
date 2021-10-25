@@ -3,7 +3,7 @@ const postModel = require('../models/Posts');
 exports.getPosts = async function(req, res, next){
     try{
         console.log("get posts");
-        let posts = await postModel.find();
+        let posts = await postModel.find().sort('-date');
         console.log("i'm here");
         res.status(200).send(posts)
     } catch(err){

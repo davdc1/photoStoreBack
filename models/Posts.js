@@ -19,8 +19,8 @@ postSchema.set('toJSON', {
     virtuals: true,
     versionKey: false,
     transform: function(doc, ret){
-        console.log('transform ret:', ret);
-        console.log('transform doc:', doc);
+        //console.log('transform ret:', ret);
+        //console.log('transform doc:', doc);
         //ret.id = ret.postId
         ret.id = ret._id
         //delete ret._id

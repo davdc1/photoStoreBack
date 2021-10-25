@@ -16,6 +16,7 @@ exports.getProduct = async function(req, res, next){
         let product = await productModel.findOne({_id: req.params.id});
         res.status(200).send(product);
     } catch(err){
+        console.log("error:", err)
         res.status(500).send(err);
     }
 }

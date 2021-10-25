@@ -38,7 +38,7 @@ const orderSchema = new Schema(
         shippingPrice:Number,
         tax:Number,
         total:Number,
-        cart:[{_id:{type: Schema.Types.ObjectId, ref: 'products'}, quantity:Number, pricePerUnit:Number, idSize:String, size:String}],
+        cart:[{productId:{type: Schema.Types.ObjectId, ref: 'products'}, quantity:Number, price:Number, idSize:String, size:String, imageName:String}],
         id:String
     }
 )

@@ -1,6 +1,6 @@
 const userModel = require('../models/Users');
 const { ObjectId } = require('mongodb')
-
+const generateToken = require('../utils/generateToken');
 
 // exports.deleteUser = (req, res) => {
 //     userModel.findOneAndDelete({ userId: req.params.userId }, (err) => {
@@ -98,6 +98,7 @@ exports.updateCart = async function(req, res, next){
         res.status(200).send(user)
     } catch(err){
         res.status(500).send(err);
+        console.log("error update cart:", err);
     }
 }
 
@@ -110,3 +111,45 @@ exports.getUserByEmail = async function(req, res, next){
         res.status(500).send(err);
     }
 }
+
+exports.authUser = async function(req, res, next){
+    console.log("authUser")
+    
+    const { email, password } = req.body;
+    const user = await userModel.findOne({email})
+    console.log("user:::::",user);
+
+    if(user && (await user.matchPassword(password))){
+        user.token = generateToken(user._id);
+        res.send(user);
+    }else{
+        res.status(401);
+        res.send('incorrect email or password');
+        console.log("incorrect email or password");
+    }
+    
+}
+
+exports.createUser = async function(req, res, next){
+    console.log("create user")
+    const userExist = await userModel.findOne({email: req.body.email})
+
+    if(userExist){
+        res.status(400)
+        throw new Error('user alrady exist')
+    }
+
+    const newUser = await userModel.create(req.body)
+    .catch((error) => {
+        res.send(error);
+    })
+
+    if(newUser){
+        newUser.token = generateToken(newUser._id)
+        res.status(201).send(newUser)
+    }else{
+        res.status(400);
+        throw new Error('invalid user data')
+    }
+}
+

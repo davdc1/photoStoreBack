@@ -16,7 +16,7 @@ exports.getOrdersByUserId = async function(req, res, next){
         let orders = await orderModel.find({userId: req.params.userId})
         // .populate('userId')
         // .populate({path: 'cart', populate: {path: '{}', populate:{path:'_id'}}});
-        .populate('cart._id');
+        // .populate({path: 'cart', populate: {path: 'productId'}})
         console.log("get orders");
         res.status(200).send(orders)
     } catch(err){
