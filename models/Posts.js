@@ -6,8 +6,8 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema(
     {
         postId:Number, //auto increment?
-        userId:Number,
-        //userId:{type: Schema.Types.ObjectId, ref: 'users'},
+        //userId:Number,
+        userId:{type: Schema.Types.ObjectId, ref: 'users'},
         content:String,
         title:String,
         date:String,

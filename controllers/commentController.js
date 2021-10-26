@@ -42,8 +42,10 @@ exports.getAllCommentsWithPost = async function(req, res, next){
 }
 
 exports.getAllCommentsForPostId = async function(req, res, next){
+    console.log("getAllCommentsForPostId")
     try{
-        const comments = await commentModel.find({postId: req.params.postId}).populate('userId')
+        const comments = await commentModel.find({postId: req.params.postId})
+        .populate('userId')
         res.send(comments);
     }
     catch(err){
@@ -85,6 +87,7 @@ exports.postComment = async function(req, res, next){
         commentItem.userId = ObjectId(req.body.userId);
         commentItem.save().then(() => res.send(commentItem))
     } catch(err){
+        console.log("error:", err)
         res.status(500).send(err);
     }
 }
