@@ -10,6 +10,7 @@ const validator = require("express-joi-validation").createValidator({
   });
 
 router.get('/', postCont.getPosts);
+router.get('/latest', postCont.getLatestPost);
 router.get('/:id', postCont.getPost);
 router.post('/', validator.body(postValSchema), valErrorHandler, postCont.postPost);
 router.put('/:id', postCont.putPost);

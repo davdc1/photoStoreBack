@@ -4,9 +4,19 @@ exports.getPosts = async function(req, res, next){
     try{
         console.log("get posts");
         let posts = await postModel.find().sort('-date');
-        console.log("i'm here");
         res.status(200).send(posts)
     } catch(err){
+        res.status(500).send(err)
+    }
+}
+
+exports.getLatestPost = async function(req, res, next){
+    try{
+        console.log("get latest post");
+        let posts = await postModel.find().sort('-date');
+        res.status(200).send(posts[0])
+    }
+    catch(error){
         res.status(500).send(err)
     }
 }
