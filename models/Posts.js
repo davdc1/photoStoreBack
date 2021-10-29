@@ -11,6 +11,7 @@ const postSchema = new Schema(
         content:String,
         title:String,
         date:String,
+        imageName:String,
         id:String
     }
 )
