@@ -6,7 +6,7 @@ const valErrorHandler = function(err, req, res, next){
         errors.push(error.message);
     });
 
-    console.log("errors::", errors[0])
+    console.log("errors::", errors)
 
     res.status(400);
     res.end({errors});
