@@ -43,7 +43,7 @@ exports.postUser = async function(req, res, next){
 exports.putUser = async function(req, res, next){
     try{
         console.log("put user");
-        let updateUser = await userModel.findOneAndUpdate({_id: req.params.id}, {$set: req.body })
+        let updateUser = await userModel.findOneAndUpdate({_id: req.params.id}, {$set: req.body }, {new: true})
         res.status(200).send(updateUser)
     } catch(err){
         res.status(500).send(err);
@@ -92,9 +92,8 @@ exports.addToCart = async function(req, res, next){
 exports.updateCart = async function(req, res, next){
     try{
         console.log("update cart");
-        let user = await userModel.findOne({_id: req.params._id})
-        user.cart = req.body;
-        user.save();
+        let user = await userModel.findOneAndUpdate({_id: req.params._id}, {cart: req.body}, {new: true})
+        //user.save().catch((error) => console.log("error:", error));
         res.status(200).send(user)
     } catch(err){
         res.status(500).send(err);

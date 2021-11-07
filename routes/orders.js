@@ -14,7 +14,8 @@ const validator = require("express-joi-validation").createValidator({
 router.get('/', orderCont.getOrders);
 router.get('/:id', orderCont.getOrder);
 router.get('/user/:userId', orderCont.getOrdersByUserId);
-router.post('/', validator.body(orderValSchema), valErrorHandler,  orderCont.postOrder);
+//router.post('/', validator.body(orderValSchema), valErrorHandler,  orderCont.postOrder);
+router.post('/', orderCont.postOrder);
 router.put('/:id', orderCont.putOrder);
 router.delete('/:id', orderCont.deleteOrder);
 

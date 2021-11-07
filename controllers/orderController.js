@@ -1,4 +1,5 @@
 const orderModel = require('../models/Orders');
+const userModel = require('../models/Users');
 
 exports.getOrders = async function(req, res, next){
     try{
@@ -38,7 +39,12 @@ exports.postOrder = async function(req, res, next){
     try{
         console.log("post order");
         const orderItem = new orderModel(req.body);
-        orderItem.save().then(() => res.send(orderItem))
+        orderItem.save()
+        .then(async () => {
+            let user = await userModel.findOneAndUpdate({_id: req.body.userId}, {cart: []}, {new: true});
+            res.status(200).send(user);
+        })
+        .catch((error) => console.log("error:", error))
     } catch(err){
         console.log("error:", err);
         res.status(500).send(err);
