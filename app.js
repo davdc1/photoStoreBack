@@ -13,6 +13,7 @@ const postRouter = require('./routes/posts');
 const commentRouter = require('./routes/comments');
 const orderRouter = require('./routes/orders');
 const ticketRouter = require('./routes/tickets');
+const galleryImageRouter = require('./routes/galleryImages')
 
 
 // var indexRouter = require('./routes/index');
@@ -44,6 +45,7 @@ app.use('/posts', postRouter);
 app.use('/comments', commentRouter);
 app.use('/orders', orderRouter);
 app.use('/tickets', ticketRouter);
+app.use('/galleryImages', galleryImageRouter)
 
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
