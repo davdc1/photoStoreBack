@@ -1,8 +1,15 @@
 const productModel = require('../models/Products');
 
+//TODO:
+//add pagination.
+//more than one filter?
+//search
 exports.getProducts = async function(req, res, next){
     try{
-        let products = await productModel.find();
+        console.log("getProducts2");
+        let products = await productModel
+        .find({[req.query.filter]: req.query.filterBy})
+        .sort(req.query.sort)
         console.log("get Products");
         res.status(200).send(products)
     } catch(err){
@@ -50,3 +57,9 @@ exports.deleteProduct = async function(req, res, next){
         res.status(500).send(err);
     }
 }
+
+
+
+
+
+
