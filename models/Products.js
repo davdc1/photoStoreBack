@@ -19,7 +19,7 @@ const productSchema = new Schema(
         productId:Number,
         prodName:String,
         rank:Number,
-        theme:String,
+        theme:[String],
         imageName:String,
         sizes:Array,
         id:String

@@ -6,9 +6,13 @@ const productModel = require('../models/Products');
 //search
 exports.getProducts = async function(req, res, next){
     try{
-        console.log("getProducts2");
+        console.log("getProducts");
+        console.log("query.filterBy:", req.query.filterBy)
         let products = await productModel
-        .find({[req.query.filter]: req.query.filterBy})
+        .find({$and:[
+            {[req.query.filter]: {$all: req.query.filterBy}},
+            {$or:[{theme: req.query.search}, {prodName: req.query.search}]}
+        ]})
         .sort(req.query.sort)
         console.log("get Products");
         res.status(200).send(products)
