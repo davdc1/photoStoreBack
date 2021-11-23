@@ -2,21 +2,40 @@ const productModel = require('../models/Products');
 
 //TODO:
 //add pagination.
-//more than one filter?
-//search
+
 exports.getProducts = async function(req, res, next){
     try{
         console.log("getProducts");
         console.log("query.filterBy:", req.query.filterBy)
-        let products = await productModel
-        .find({$and:[
-            {[req.query.filter]: {$all: req.query.filterBy}},
-            {$or:[{theme: req.query.search}, {prodName: req.query.search}]}
-        ]})
-        .sort(req.query.sort)
-        console.log("get Products");
+        console.log("query.search:", req.query.search)
+
+        let products;
+        let sortByObj = {};
+        if(req.query.sort){
+            sortByObj =
+            req.query.sort.split(" ")[0] === "price" ?
+            {"sizes.price": req.query.sort.split(" ")[1]} :
+            {[req.query.sort.split(" ")[0]]: req.query.sort.split(" ")[1]};
+        }
+
+        console.log("sortObj:", sortByObj);
+        if(req.query.search){
+            console.log("here")
+            products = await productModel
+            .find({$and:[
+                {[req.query.filter]: {$all: req.query.filterBy}},
+                {$or:[{theme: req.query.search}, {prodName: req.query.search}]}
+            ]})
+            .sort(sortByObj)
+        }else{
+            console.log("there")
+            products = await productModel
+            .find({[req.query.filter]: {$all: req.query.filterBy}})
+            .sort(sortByObj)
+        }
         res.status(200).send(products)
     } catch(err){
+        console.log("errror:", err)
         res.status(500).send(err)
     }
 }
