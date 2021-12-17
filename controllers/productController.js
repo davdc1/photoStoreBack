@@ -18,9 +18,7 @@ exports.getProducts = async function(req, res, next){
             {[req.query.sort.split(" ")[0]]: req.query.sort.split(" ")[1]};
         }
 
-        console.log("sortObj:", sortByObj);
         if(req.query.search){
-            console.log("here")
             products = await productModel
             .find({$and:[
                 {[req.query.filter]: {$all: req.query.filterBy}},
@@ -28,14 +26,13 @@ exports.getProducts = async function(req, res, next){
             ]})
             .sort(sortByObj)
         }else{
-            console.log("there")
             products = await productModel
             .find({[req.query.filter]: {$all: req.query.filterBy}})
             .sort(sortByObj)
         }
         res.status(200).send(products)
     } catch(err){
-        console.log("errror:", err)
+        console.log("error:", err)
         res.status(500).send(err)
     }
 }

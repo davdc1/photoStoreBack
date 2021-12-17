@@ -9,7 +9,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("mongo local db is connected"))
+  .then(() => console.log("mongo db is connected"))
   .catch((error) => {
-      console.log("????????????????????????SSSSSSSSSSSSSSSSS?", error);
+      console.log(error);
   })
