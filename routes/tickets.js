@@ -12,7 +12,7 @@ const validator = require("express-joi-validation").createValidator({
 
 router.get('/', ticketCont.getTickets);
 router.get('/:id', ticketCont.getTicket);
-router.post('/', validator.body(ticketValSchema), valErrorHandler, ticketCont.postTicket);
+router.post('/', ticketCont.postTicket);
 router.put('/:id', ticketCont.putTicket);
 router.delete('/:id', ticketCont.deleteTicket);
 

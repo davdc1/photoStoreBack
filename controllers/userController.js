@@ -43,9 +43,10 @@ exports.postUser = async function(req, res, next){
 exports.putUser = async function(req, res, next){
     try{
         console.log("put user");
-        let updateUser = await userModel.findOneAndUpdate({_id: req.params.id}, {$set: req.body }, {new: true})
+        let updateUser = await userModel.findOneAndUpdate({_id: req.params._id}, {$set: req.body }, {new: true})
         res.status(200).send(updateUser)
     } catch(err){
+        console.log(err);
         res.status(500).send(err);
     }
 }
@@ -53,7 +54,7 @@ exports.putUser = async function(req, res, next){
 exports.deleteUser = async function(req, res, next){
     try{
         console.log("delete user");
-        await userModel.findOneAndDelete({_id: req.params.id});
+        await userModel.findOneAndDelete({_id: req.params._id});
         res.status(200).send({});
     } catch(err){
         res.status(500).send(err);
