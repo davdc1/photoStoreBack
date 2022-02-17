@@ -1,8 +1,7 @@
 const postModel = require('../models/Posts');
 
-exports.getPosts = async function(req, res, next){
+exports.getPosts = async function(req, res){
     try{
-        console.log("get posts");
         let posts = await postModel.find().sort('-date');
         res.status(200).send(posts)
     } catch(err){
@@ -10,9 +9,8 @@ exports.getPosts = async function(req, res, next){
     }
 }
 
-exports.getLatestPost = async function(req, res, next){
+exports.getLatestPost = async function(req, res){
     try{
-        console.log("get latest post");
         let posts = await postModel.find().sort('-date');
         res.status(200).send(posts[0])
     }
@@ -21,20 +19,17 @@ exports.getLatestPost = async function(req, res, next){
     }
 }
 
-exports.getPost = async function(req, res, next){
+exports.getPost = async function(req, res){
     try{
-        console.log("get post by id");
         let post = await postModel.findOne({_id: req.params.id});
-        console.log("requsted post:", post);
         res.status(200).send(post);
     } catch(err){
         res.status(500).send(err);
     }
 }
 
-exports.postPost = async function(req, res, next){
+exports.postPost = async function(req, res){
     try{
-        console.log("post post");
         const postItem = new postModel(req.body);
         postItem.save().then(() => res.send(postItem))
     } catch(err){
@@ -42,9 +37,8 @@ exports.postPost = async function(req, res, next){
     }
 }
 
-exports.putPost = async function(req, res, next){
+exports.putPost = async function(req, res){
     try{
-        console.log("put post", req.params.id);
         let updatePost = await postModel.findOneAndUpdate({_id: req.params.id}, {$set: req.body })
         res.status(200).send(updatePost)
     } catch(err){
@@ -52,9 +46,8 @@ exports.putPost = async function(req, res, next){
     }
 }
 
-exports.deletePost = async function(req, res, next){
+exports.deletePost = async function(req, res){
     try{
-        console.log("delete post");
         await postModel.findOneAndDelete({_id: req.params.id});
         res.status(200).send({});
     } catch(err){

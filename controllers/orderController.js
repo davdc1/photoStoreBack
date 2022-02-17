@@ -1,33 +1,26 @@
 const orderModel = require('../models/Orders');
 const userModel = require('../models/Users');
 
-exports.getOrders = async function(req, res, next){
+exports.getOrders = async function(req, res){
     try{
         let orders = await orderModel.find();
-        console.log("get orders");
         res.status(200).send(orders)
     } catch(err){
         res.status(500).send(err)
     }
 }
 
-exports.getOrdersByUserId = async function(req, res, next){
-    console.log("getOrdersByUserId");
+exports.getOrdersByUserId = async function(req, res){
     try{
         let orders = await orderModel.find({userId: req.params.userId})
-        // .populate('userId')
-        // .populate({path: 'cart', populate: {path: '{}', populate:{path:'_id'}}});
-        // .populate({path: 'cart', populate: {path: 'productId'}})
-        console.log("get orders");
         res.status(200).send(orders)
     } catch(err){
         res.status(500).send(err)
     }
 }
 
-exports.getOrder = async function(req, res, next){
+exports.getOrder = async function(req, res){
     try{
-        console.log("get order by id");
         let order = await orderModel.findOne({_id: req.params.id});
         res.status(200).send(order);
     } catch(err){
@@ -35,35 +28,31 @@ exports.getOrder = async function(req, res, next){
     }
 }
 
-exports.postOrder = async function(req, res, next){
+exports.postOrder = async function(req, res){
     try{
-        console.log("post order");
         const orderItem = new orderModel(req.body);
         orderItem.save()
         .then(async () => {
             let user = await userModel.findOneAndUpdate({_id: req.body.userId}, {cart: []}, {new: true});
             res.status(200).send(user);
         })
-        .catch((error) => console.log("error:", error))
-    } catch(err){
-        console.log("error:", err);
-        res.status(500).send(err);
-    }
-}
-
-exports.putOrder = async function(req, res, next){
-    try{
-        console.log("put order");
-        let updateOrder = await orderModel.findOneAndUpdate({_id: req.params.id}, {$set: req.body })
-        res.status(200).send(updateOrder)
+        .catch((error) => res.status(500).send(error))
     } catch(err){
         res.status(500).send(err);
     }
 }
 
-exports.deleteOrder = async function(req, res, next){
+exports.putOrder = async function(req, res){
     try{
-        console.log("delete order:", req.params);
+        let updatedOrder = await orderModel.findOneAndUpdate({_id: req.params.id}, {$set: req.body })
+        res.status(200).send(updatedOrder)
+    } catch(err){
+        res.status(500).send(err);
+    }
+}
+
+exports.deleteOrder = async function(req, res){
+    try{
         await orderModel.findOneAndDelete({_id: req.params.id});
         res.status(200).send({});
     } catch(err){

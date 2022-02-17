@@ -1,7 +1,6 @@
 require('../data/database');
 const express = require('express');
 const router = express.Router();
-const postModel = require('../models/Posts');
 const postCont = require('../controllers/postController')
 const postValSchema = require('../validation/models/postValModel')
 const valErrorHandler = require('../validation/errorHandlers/valErrorHandler');

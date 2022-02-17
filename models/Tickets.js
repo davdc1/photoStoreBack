@@ -1,6 +1,4 @@
-
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 
@@ -23,8 +21,6 @@ ticketSchema.set('toJSON', {
     versionKey: false,
     transform: function(doc, ret){
         ret.id = ret._id
-        // delete ret._id
-        //ret.id = ret.userId
     }
 
 })
