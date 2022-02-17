@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema(
     {
-        userId:{type: Schema.Types.ObjectId, ref:"users"},
+        userId:{type: Schema.Types.ObjectId, ref:"users", required: true},
         status:String,
         paied:Boolean,
         date:String,
@@ -38,7 +38,13 @@ const orderSchema = new Schema(
         shippingPrice:Number,
         tax:Number,
         total:Number,
-        cart:[{productId:{type: Schema.Types.ObjectId, ref: 'products'}, quantity:Number, price:Number, idSize:String, size:String, imageName:String}],
+        cart:[{
+                productId: {type: Schema.Types.ObjectId, ref: 'products'},
+                quantity:Number, price:Number,
+                idSize:String,
+                size:String,
+                imageName:String
+            }],
         id:String
     }
 )
@@ -48,8 +54,6 @@ orderSchema.set('toJSON', {
     versionKey: false,
     transform: function(doc, ret){
         ret.id = ret._id
-        // delete ret._id
-        //ret.id = ret.userId
     }
 
 })

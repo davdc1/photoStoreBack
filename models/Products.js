@@ -1,18 +1,5 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
-
-
-
-const sizesSchema = new Schema(
-    [
-        {
-            size:String,
-            price:Number,
-            idSize:String
-        }
-    ]
-)
 
 const productSchema = new Schema(
     {

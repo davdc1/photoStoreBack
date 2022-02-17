@@ -1,7 +1,6 @@
 require('../data/database');
 const express = require('express');
 const router = express.Router();
-const galleryImageModel = require('../models/GalleryImages');
 const galleryImageCont = require('../controllers/galleryImageController');
 
 

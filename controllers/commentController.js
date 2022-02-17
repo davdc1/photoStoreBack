@@ -1,10 +1,8 @@
 const commentModel = require('../models/Comments');
 const { ObjectId } = require('mongodb');
-const mongoose = require('mongoose');
 
-exports.getComment = async function(req, res, next){
+exports.getComment = async function(req, res){
     try{
-        console.log("getComment");
         let comment = await commentModel.findOne({_id: req.params.commentId});
         res.status(200).send(comment);
     } catch(err){
@@ -12,9 +10,8 @@ exports.getComment = async function(req, res, next){
     }
 }
 
-exports.getAllComments = async function(req, res, next){
+exports.getAllComments = async function(req, res){
     try{
-        console.log("getAllComments");
         let comments = await commentModel.find();
         res.status(200).send(comments)
     } catch(err){
@@ -22,16 +19,18 @@ exports.getAllComments = async function(req, res, next){
     }
 }
 
-exports.getCommentWithPost = async function(req, res, next){
+exports.getCommentWithPost = async function(req, res){
     try{
-        const comment = await commentModel.findOne({_id: req.params.commentId}).populate('postId');
+        const comment = await commentModel.findOne({_id: req.params.commentId})
+        .populate('postId');
         res.send(comment);
     }
     catch(err){
         res.status(500).send(err);
     }
 }
-exports.getAllCommentsWithPost = async function(req, res, next){
+
+exports.getAllCommentsWithPost = async function(req, res){
     try{
         const comments = await commentModel.find().populate('postId');
         res.send(comments);
@@ -41,8 +40,7 @@ exports.getAllCommentsWithPost = async function(req, res, next){
     }
 }
 
-exports.getAllCommentsForPostId = async function(req, res, next){
-    console.log("getAllCommentsForPostId")
+exports.getAllCommentsForPostId = async function(req, res){
     try{
         const comments = await commentModel.find({postId: req.params.postId})
         .populate('userId')
@@ -53,48 +51,18 @@ exports.getAllCommentsForPostId = async function(req, res, next){
     }
 }
 
-
-// exports.postComment = async function(req, res, next){
-//     try{
-//         console.log("postComment");
-//         const commentItem = new commentModel(req.body);
-//         commentItem.save().then(() => res.send(commentItem))
-//     } catch(err){
-//         res.status(500).send(err);
-//     }
-// }
-
-exports.postCommentWithPostRef = async function(req, res, next){
+exports.postComment = async function(req, res){
     try{
-        console.log("postCommentWithPostRef");
-        
         const commentItem = new commentModel(req.body);
-        commentItem.postId = ObjectId(req.params.postRef);
-        commentItem.save().then(() => res.send(commentItem))
-    } catch(err){
-        res.status(500).send(err);
-    }
-}
-
-exports.postComment = async function(req, res, next){
-    try{
-        console.log("postComment");
-        console.log("req.body.userId:", req.body.userId);
-        console.log("ObjectId(req.body.userId):", ObjectId(req.body.userId));
-        
-        const commentItem = new commentModel(req.body);
-        //commentItem.postId = ObjectId(req.params.postRef);
         commentItem.userId = ObjectId(req.body.userId);
         commentItem.save().then(() => res.send(commentItem))
     } catch(err){
-        console.log("error:", err)
         res.status(500).send(err);
     }
 }
 
-exports.putComment = async function(req, res, next){
+exports.putComment = async function(req, res){
     try{
-        console.log("put comment");
         let updateComment = await commentModel.findOneAndUpdate({_id:req.params.commentId}, {$set: req.body })
         res.status(200).send(updateComment)
     } catch(err){
@@ -102,9 +70,8 @@ exports.putComment = async function(req, res, next){
     }
 }
 
-exports.deleteComment = async function(req, res, next){
+exports.deleteComment = async function(req, res){
     try{
-        console.log("deleteComment");
         await commentModel.findOneAndDelete({_id: req.params.commentId});
         res.status(200).send({});
     } catch(err){

@@ -4,10 +4,9 @@ const Schema =  mongoose.Schema;
 
 const commentSchema = new Schema(
     {
-        commentId:Number, //auto increment?
+        commentId:Number,
         postId: {type: Schema.Types.ObjectId, ref: 'posts', required: true},
         userId:{type: Schema.Types.ObjectId, ref: 'users'},
-        //userId: {type: Schema.Types.ObjectId, ref: 'users'},
         title:String,
         content:String,
         date:String,
@@ -20,7 +19,6 @@ commentSchema.set('toJSON', {
     versionKey: false,
     transform: function(doc, ret){
         ret.id = ret._id
-        //delete ret._id
     }
 
 })
