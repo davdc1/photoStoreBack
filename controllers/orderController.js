@@ -40,10 +40,8 @@ exports.postOrder = async function(req, res){
         })
         .catch((error) => {
             res.status(500).send(error);
-            console.log("POST ORDER ERROR1:", error)
         })
     } catch(err){
-        console.log("POST ORDER ERROR2:", err)
         res.status(500).send(err);
     }
 }
