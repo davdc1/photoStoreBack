@@ -3,17 +3,8 @@ const userModel = require('../models/Users');
 const asyncHandler = require('express-async-handler');
 
 
-//import jwt from 'jsonwebtoken';
-//import userModel from '../models/Users';
-//import asyncHandler from 'express-async-handler'
-
-
-
-
 exports.protect = asyncHandler(async (req, res, next) => {
     let token
-
-    console.log('protect middleWare')
 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         try{
@@ -24,14 +15,12 @@ exports.protect = asyncHandler(async (req, res, next) => {
             
        }
        catch(error){
-        console.error(error);
         res.status(401);
         throw new Error('not authorized. invalid token')
        }
     }
 
     if(!token){
-        console.log('no token');
         res.status(401)
         throw new Error('not authorized')
     }
