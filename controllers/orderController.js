@@ -1,5 +1,6 @@
 const orderModel = require('../models/Orders');
 const userModel = require('../models/Users');
+const { ObjectId } = require('mongodb');
 
 exports.getOrders = async function(req, res){
     try{
@@ -30,13 +31,16 @@ exports.getOrder = async function(req, res){
 
 exports.postOrder = async function(req, res){
     try{
+        req.body._id = ObjectId(req.body._id);
         const orderItem = new orderModel(req.body);
         orderItem.save()
         .then(async () => {
             let user = await userModel.findOneAndUpdate({_id: req.body.userId}, {cart: []}, {new: true});
             res.status(200).send(user);
         })
-        .catch((error) => res.status(500).send(error))
+        .catch((error) => {
+            res.status(500).send(error);
+        })
     } catch(err){
         res.status(500).send(err);
     }

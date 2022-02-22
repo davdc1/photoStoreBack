@@ -10,6 +10,7 @@ const orderSchema = new Schema(
         status:String,
         paied:Boolean,
         date:String,
+        time:String,
         shippingAddress:{
             firsrName:String,
             lastName:String,

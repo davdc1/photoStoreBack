@@ -112,7 +112,7 @@ exports.createUser = async function(req, res){
 
     if(userExist){
         res.status(400)
-        throw new Error('user alrady exist')
+        throw new Error('user already exists')
     }
 
     const newUser = await userModel.create(req.body)
