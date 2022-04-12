@@ -25,6 +25,7 @@ const userSchema = new Schema(
         phone:String,
         cart:[{
             productId:{type: Schema.Types.ObjectId, ref: 'products'},
+            prodName: String,
             quantity:Number,
             price:Number,
             idSize:String,
